@@ -334,6 +334,7 @@
     <Content Include="Views\Actualizaciones\Edit.cshtml" />
     <Content Include="Views\Actualizaciones\Index.cshtml" />
     <Content Include="Views\PDF\Index.cshtml" />
+    <Content Include="Content\MU.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
