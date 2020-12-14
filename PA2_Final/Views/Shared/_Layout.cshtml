@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Proyecto Final</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="cover-container d-flex h-100 p-3 flex-column">
+        <header class="masthead mb-auto">
+            <div class="inner">
+                <h3 class="masthead-brand">Project<strong style="color:purple">Manager</strong></h3>
+                <nav class="nav nav-masthead justify-content-center">
+                    <a href="~/Home/Index" class="nav-link">Inicio</a>
+                    <a href="~/Home/Contact" class="nav-link">Contacto</a>
+                    <a href="~/Home/About" class="nav-link">Acerca de nosotros</a>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown">Administrar</a>
+                    <div class="dropdown-menu">
+                        <a href="~/Clientes/Index" class="dropdown-item">Clientes</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="~/Proyectoes/Index" class="dropdown-item">Proyectos</a>
+                        @*<a href="~/Sugerencias/Index" class="dropdown-item">Sugerencias</a>
+                        <a href="~/Errors/Index" class="dropdown-item">Errores</a>*@
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <main role="main" class="inner cover" style="height:calc(100vh - 20vh);overflow:auto;">
+            @RenderBody()
+        </main>
+
+        <footer class="mastfoot mt-auto">
+            <div class="inner">
+                <p>Desarrollado por <b>17100183 José Luis Anguiano López</b> </p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="/Scripts/vendor/jquery-slim.min.js"><\/script>')</script>
+    @Scripts.Render("~/bundles/js-popper")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

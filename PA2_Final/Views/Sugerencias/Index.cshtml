@@ -1,0 +1,46 @@
+﻿@model IEnumerable<PA2_Final.Models.Sugerencia>
+
+@{
+    ViewBag.Title = "Index";
+    PA2_Final.Models.Proyecto proyecto = (PA2_Final.Models.Proyecto)Session["proyecto"];
+    PA2_Final.Models.Cliente cliente = ((PA2_Final.Models.Cliente)Session["cliente"]);
+}
+
+<h2>Sugerencias del proyecto <strong>@((proyecto != null) ? proyecto.Nombre : "")</strong></h2>
+@if (proyecto != null)
+{
+    <p>
+        <a href="~/Sugerencias/Create?id=@proyecto.ID" class="btn btn-success">Nueva sugerencia</a>
+    </p>
+}
+<div class="card-columns">
+
+    @{
+        var select = Model;
+        if (proyecto != null)
+        {
+            select = from a in Model
+                     where (from pa in proyecto.Sugerencias select pa.ID).ToList().Contains(a.ID)
+                     select a;
+        }
+        foreach (var item in select)
+        {
+            <div class="card bg-dark" style="width: 18rem;">
+                <div class="card-body p-4">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.FechaCreacion)</h5>
+                    <h6 class="mb-2 @PA2_Final.Models.PatronEstado.SugerenciaColor.Color(item.Estado)"> @Html.DisplayFor(modelItem => item.Estado).ToString().Replace("_", " ")</h6>
+                    <p class="card-textpl-4 pr-4 text-justify" style="height:5rem;max-height:5rem;overflow-y:auto;">@Html.DisplayFor(modelItem => item.Descripcion)</p>
+                    <center>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.ID }, new { @class = "text-success" }) |
+                        @Html.ActionLink("Detalles", "Details", new { id = item.ID }, new { @class = "text-primary" }) |
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.ID }, new { @class = "text-danger" })
+                    </center>
+                </div>
+            </div>
+        }
+    }
+
+</div>
+<div>
+    <a href="~/Proyectoes/index@((cliente!=null)?"?id="+cliente.ID:"")" class="">Regresar al listado</a>
+</div>

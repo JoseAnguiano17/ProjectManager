@@ -1,0 +1,49 @@
+﻿@model PA2_Final.Models.Sugerencia
+
+@{
+    ViewBag.Title = "Delete";
+    PA2_Final.Models.Proyecto proyecto = ((PA2_Final.Models.Proyecto)Session["proyecto"]);
+}
+
+<h2>Eliminar sugerencia</h2>
+
+<h3 class="text-center">¿Seguro desea borrar esta sugerencia?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-default" /> |
+            <a href="~/Sugerencias/index@((proyecto!=null)?"?id="+proyecto.ID:"")" class="">Regresar al listado</a>
+        </div>
+    }
+</div>

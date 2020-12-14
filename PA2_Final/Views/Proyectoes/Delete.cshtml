@@ -1,0 +1,86 @@
+﻿@model PA2_Final.Models.Proyecto
+
+@{
+    ViewBag.Title = "Delete";
+    PA2_Final.Models.Cliente cliente = ((PA2_Final.Models.Cliente)Session["cliente"]);
+}
+
+<h2>Eliminar proyecto</h2>
+<hr />
+<h3>¿Seguro desea eliminar este proyecto?</h3>
+<div>
+    <hr />
+    <h4 style="text-align:center;">
+        <strong>Proyecto:</strong> @Html.DisplayFor(model => model.Nombre)
+    </h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Costo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Costo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaCreacion)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        @{
+            bool a = false;
+            if (Model.Actualizaciones.Count > 0)
+            {
+                <strong> Este proyecto tiene actualizaciones asociadas, por lo cual no se puede <span style="color:red">Eliminar</span></strong>
+                <br />
+                a = true;
+            }
+            if (Model.Sugerencias.Count > 0)
+            {
+                <strong> Este proyecto tiene sugerencias asociadas, por lo cual no se puede <span style="color:red">Eliminar</span></strong>
+                <br />
+                a = true;
+            }
+            if (Model.Errores.Count > 0)
+            {
+                <strong> Este proyecto tiene errores asociados, por lo cual no se puede <span style="color:red">Eliminar</span></strong>
+                <br />
+                a = true;
+            }
+
+            if (!a)
+            {
+                <input type="submit" value="Eliminar" class="btn btn-default" /> <span>|</span>
+            }
+        }
+        <a href="~/Proyectoes/index@((cliente!=null)?"?id="+cliente.ID:"")" class="">Regresar al listado</a>
+    </div>
+    }
+</div>

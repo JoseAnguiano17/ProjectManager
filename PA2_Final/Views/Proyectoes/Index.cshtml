@@ -1,0 +1,52 @@
+﻿@model IEnumerable<PA2_Final.Models.Proyecto>
+
+@{
+    ViewBag.Title = "Index";
+    PA2_Final.Models.Cliente cliente = null;
+    if (Session["cliente"] != null)
+    {
+        cliente = (PA2_Final.Models.Cliente)Session["cliente"];
+    }
+}
+
+<h2>Proyectos @((cliente != null) ? "del cliente " + cliente.Nombre + " " + cliente.ApellidoPaterno + " " + cliente.ApellidoMaterno : "")</h2>
+<p>
+    @if (cliente != null)
+    {
+        <a href="~/Proyectoes/Create?id=@cliente.ID" class="btn btn-success">Asociar nuevo proyecto</a>
+    }
+    @Html.ActionLink("Reporte PDF", "ReporteProyectos", "PDF", null, new { @class = "btn btn-info" })
+</p>
+<div class="card-columns">
+    @{
+        var select = Model;
+        if (cliente != null)
+        {
+            select = from p in Model
+                     where (from pc in cliente.Proyectos select pc.ID).ToList().Contains(p.ID)
+                     select p;
+        }
+        foreach (var item in select)
+        {
+            <div class="card bg-dark" style="width: 18rem;">
+                <div class="card-body p-4">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Nombre)</h5>
+                    <h6 class="mb-2 @PA2_Final.Models.PatronEstado.ProyectoColor.Color(item.Estado)"> @Html.DisplayFor(modelItem => item.Estado).ToString().Replace("_", " ")</h6>
+                    <p class="card-text">@Html.DisplayFor(modelItem => item.Descripcion)</p>
+                    <center>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.ID }, new { @class = "text-success" }) |
+                        @Html.ActionLink("Detalles", "Details", new { id = item.ID }, new { @class = "text-primary" }) |
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.ID }, new { @class = "text-danger" }) <br /> <br />
+                    </center>
+                    <a href="~/Actualizaciones/index?id=@item.ID" style="text-decoration:none;" class="text-decoration-none btn-sm btn-toolbar bg-dark">Actualizaciones &nbsp;&nbsp;<span class="pl-2 pr-2 h-auto badge-primary badge-pill">@item.Actualizaciones.Count</span></a>
+                    <a href="~/Sugerencias/index?id=@item.ID" style="text-decoration:none;" class="text-decoration-none btn-sm btn-toolbar bg-dark">Sugerencias &nbsp;&nbsp; <span class="pl-2 pr-2 h-auto badge-primary badge-pill">@item.Sugerencias.Where(s => s.Estado != PA2_Final.Models.PatronEstado.EstadoSugerencia.REALIZADA).Count()</span></a>
+                    <a href="~/Errors/index?id=@item.ID" style="text-decoration:none;" class="btn-sm btn-toolbar bg-dark">Errores &nbsp;&nbsp;<span class="pl-2 pr-2 h-auto badge-primary badge-pill">@item.Errores.Where(s => s.Estado != PA2_Final.Models.PatronEstado.EstadoError.RESUELTO).Count()</span></a>
+                </div>
+            </div>
+        }
+    }
+</div>
+@if (cliente != null)
+{
+    <a href="~/Clientes/index" class="">Regresar</a>
+}

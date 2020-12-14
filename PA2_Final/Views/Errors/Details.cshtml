@@ -1,0 +1,42 @@
+﻿@model PA2_Final.Models.Error
+
+@{
+    ViewBag.Title = "Details";
+    PA2_Final.Models.Proyecto proyecto = ((PA2_Final.Models.Proyecto)Session["proyecto"]);
+}
+
+<h2>Detalles de errores</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaCreacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaCreacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.ID }) |
+    <a href="~/Errors/index@((proyecto!=null)?"?id="+proyecto.ID:"")" class="">Regresar al listado</a>
+</p>
